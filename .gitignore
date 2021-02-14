@@ -290,4 +290,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# django secret key
+secret.json
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,python,vscode,django,venv,virtualenv
