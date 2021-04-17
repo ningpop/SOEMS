@@ -1,5 +1,5 @@
-# EOOMS-BE
-## EOOMS(Education On-Offline Matching Service) Backend API Server
+# SOEMS-BE
+## SOEMS(Small Online Education Matching Service) Backend API Server
 ### 2021 SCH CSE Capstone Design 2
 
 ### 💻 Technology Stack
