@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 from .secret_conf import get_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # apps
+    'main.apps.MainConfig',
     'user.apps.UserConfig',
     'study.apps.StudyConfig',
 ]
@@ -125,3 +127,8 @@ AUTH_USER_MODEL = "user.User"
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
