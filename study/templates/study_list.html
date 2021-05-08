@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+SOEMS - 전체 강의 목록
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block menu %}
+<ul class="navbar-nav ml-auto my-2 my-lg-0">
+    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'home' %}#about">About</a></li>
+    <li class="nav-item active"><a class="nav-link js-scroll-trigger" href="{% url 'study_list' %}">전체 강의</a></li>
+    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">재능 공유하기</a></li>
+    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'home' %}#contact">Contact</a></li>
+    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Log In</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<header class="masthead-otherpage">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10 align-self-end">
+                <h2 class="text-uppercase text-white font-weight-bold">Ready to start substainable your life with us?
+                </h2>
+                <hr class="divider my-4" />
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="mb-4">전체 강의</h2>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <a href="{% url 'study_detail' %}"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..."></a>
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{% url 'study_detail' %}">비전공자를 위한 웹사이트 만들기</a></h5>
+                        <p class="card-text">왕초보도 할 수 있는 웹 프론트엔드를 익히는 강의입니다. 개발을 어디서부터 시작할지 막막했다면 이 강의를 강력 추천할게요. 간단한 HTML/CSS, Javascript만으로 진행합니다!<br>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..."></a>
+                    <div class="card-body">
+                        <h4 class="card-title"><a href="#!">강의1</a></h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra
+                            euismod odio, gravida pellentesque urna varius vitae.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..."></a>
+                    <div class="card-body">
+                        <h4 class="card-title"><a href="#!">강의2</a></h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos quisquam,
+                            error quod sed cumque, odio distinctio velit nostrum temporibus necessitatibus et facere
+                            atque iure perspiciatis mollitia recusandae vero vel quam!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..."></a>
+                    <div class="card-body">
+                        <h4 class="card-title"><a href="#!">강의3</a></h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra
+                            euismod odio, gravida pellentesque urna varius vitae.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..."></a>
+                    <div class="card-body">
+                        <h4 class="card-title"><a href="#!">강의4</a></h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra
+                            euismod odio, gravida pellentesque urna varius vitae.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..."></a>
+                    <div class="card-body">
+                        <h4 class="card-title"><a href="#!">강의5</a></h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque earum
+                            nostrum suscipit ducimus nihil provident, perferendis rem illo, voluptate atque, sit eius in
+                            voluptates, nemo repellat fugiat excepturi! Nemo, esse.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
