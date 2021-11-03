@@ -22,12 +22,11 @@ class Study(models.Model):
 
 class Participation(models.Model):
     study = models.ForeignKey("Study", on_delete=models.CASCADE) # 해당 강의 글
-    max_size = models.PositiveSmallIntegerField(default = 5) # 최대 인원 수
-    applicant = models.ManyToManyField("user.User", blank = True) # 강의 수강신청자
+    applicant = models.ForeignKey("user.User", on_delete=models.CASCADE, blank=True) # 강의 수강신청자
 
-    @property
-    def is_full(self):
-        return self.applicant.count() == self.max_size
+    def __str__(self):
+        return self.study.title + " / " + self.applicant.name
+
 
 class Review(models.Model):
     username = models.ForeignKey("user.User", on_delete=models.CASCADE) # 댓글 작성자
@@ -36,5 +35,5 @@ class Review(models.Model):
     content = models.TextField() # 댓글 내용
 
     def __str__(self):
-        return self.username
+        return self.username.name
     
