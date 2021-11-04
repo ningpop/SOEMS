@@ -23,4 +23,4 @@ class User(AbstractUser):
     #description = models.TextField() # 이력
 
     def __str__(self):
-        return self.name + '/' + self.email
+        return self.name
