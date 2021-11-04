@@ -20,7 +20,7 @@ class User(AbstractUser):
     is_subscribe = models.BooleanField(default = False) # 구독 유무(강의 수강 가능/불가능 판단)
     subscribe_period = models.CharField(max_length = 50) # 구독 마감 날짜 -> datefield로 바꾸는거 찾아보기(not null이 안된대...)
     #subscribe_period = models.DateField(blank = True) # 구독 마감 날짜
-    description = models.TextField() # 이력
+    #description = models.TextField() # 이력
 
     def __str__(self):
         return self.name + '/' + self.email
