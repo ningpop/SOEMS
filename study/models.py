@@ -4,11 +4,12 @@ from user.models import User
 # Create your models here.
 class Study(models.Model):
     title = models.CharField(max_length = 50) # 강의 이름
-    category = models.CharField(max_length = 20) # 강의 카테고리
+    category = models.CharField(max_length = 50) # 강의 카테고리 (입력 시 ,로 구분할 것 ex. html, css, js)
     host = models.ForeignKey("user.User", on_delete=models.CASCADE) # 강의 진행자
     pub_date = models.DateField() # 강의 글 작성일자
-    start_period = models.DateField() # 강의 시작 일자
-    end_period = models.DateField() # 강의 종료 일자
+    period = models.CharField(max_length=20) # 간단한 기간 (ex. 4주 과정)
+    start_date = models.DateField() # 강의 시작 일자
+    end_date = models.DateField() # 강의 종료 일자
     hit_count = models.PositiveIntegerField(default = 0) # 강의 글의 조회수
     content = models.TextField() # 강의 글 내용
     #content_photos = models.ImageField() # 강의 글 내용 속 이미지
