@@ -33,9 +33,16 @@ SOEMS - 전체 강의 목록
 
 <section class="py-5 bg-light">
     <div class="container">
-        <h2 class="mb-4">전체 강의</h2>
-        {% for study in studies %}
         <div class="row">
+            <div class="col-md-10">
+                <h2 class="mb-4">전체 강의</h2>
+            </div>
+            <div class="col-md-2">
+                <a href="{% url 'study_create' %}" class="btn btn-block btn-primary text-uppercase">강의 글 쓰러가기</a>
+            </div>
+        </div>
+        <div class="row">
+            {% for study in studies %}
             <div class="col-lg-4 col-sm-6 mb-4">
                 <div class="card h-100">
                     <a href="{% url 'study_detail' study.id %}">
@@ -47,8 +54,8 @@ SOEMS - 전체 강의 목록
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </section>
 {% endblock %}
