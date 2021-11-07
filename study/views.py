@@ -10,7 +10,9 @@ def study_list(request):
     return render(request, 'study_list.html', context)
 
 def study_detail(request, study_id):
-    study = Study.objects.get(pk=study_id)
+    study = get_object_or_404(Study, pk=study_id)
+    study.hit_count += 1
+    study.save()
     category = study.category.split(',')
     context = {
         'study' : study,
@@ -28,8 +30,8 @@ def study_create(request):
         study.period = request.POST['period']
         study.start_date = request.POST['start_date']
         study.end_date = request.POST['end_date']
-        study.total_people = request.POST['total_people']
         study.content = request.POST['content']
+        study.total_people = request.POST['total_people']
         study.current_people = 0
         study.save()
         this_study = get_object_or_404(Study, pk=study.id)
@@ -39,3 +41,22 @@ def study_create(request):
         return render(request, 'study_detail.html', context)
 
     return render(request, 'study_create.html')
+
+def study_update(request, study_id):
+    study = get_object_or_404(Study, pk=study_id)
+
+    if request.method == 'POST':
+        study.title = request.POST['title']
+        study.category = request.POST['category']
+        study.period = request.POST['period']
+        study.start_date = request.POST['start_date']
+        study.end_date = request.POST['end_date']
+        study.content = request.POST['content']
+        study.total_people = request.POST['total_people']
+        study.save()
+        return redirect("study_detail", study_id)
+
+    context = {
+        "study" : study
+    }
+    return render(request, "study_update.html", context)
