@@ -66,22 +66,36 @@ SOEMS - 강의 | {{ study.title }}
                 </blockquote>
                 <hr>
                 <!-- Comments form-->
+                {% if user.is_authenticated %}
                 <div class="card my-4">
                     <h5 class="card-header">수강평 남기기</h5>
                     <div class="card-body">
-                        <form>
-                            <div class="form-group"><textarea class="form-control" rows="3"></textarea></div><br>
+                        <form method="POST" action="{% url 'review_create' study.id %}">
+                            {% csrf_token %}
+                            <div class="form-group"><textarea class="form-control" name="content" rows="3"></textarea>
+                            </div><br>
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
+                {% endif %}
                 {% for review in study.review_set.all %}
                 <!-- Single comment-->
                 <div class="media mb-4">
                     <img class="d-flex mr-3 rounded-circle" src="https://via.placeholder.com/50x50" alt="...">
                     <div class="media-body">
-                        <h5 class="mt-0">{{ review.username }}</h5>
-                        {{ review.content }}
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h5 class="mt-0">{{ review.username }}</h5>
+                                {{ review.content }}
+                            </div>
+                            {% if review.username == request.user %}
+                            <div class="col-md-2">
+                                <a href="{% url 'review_delete' study.id review.id %}"
+                                    class="btn btn-block btn-outline-warning text-uppercase">삭제</a>
+                            </div>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
