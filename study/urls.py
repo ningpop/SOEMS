@@ -12,4 +12,8 @@ urlpatterns = [
     # Review
     path('review_create/<int:study_id>/', views.review_create, name='review_create'),
     path('review_delete/<int:study_id>/<int:review_id>/', views.review_delete, name='review_delete'),
+
+    # Participation
+    path('detail/<int:study_id>/participate_at_study', views.participate_at_study, name='participate_at_study'),
+    path('detail/<int:study_id>/participate_cancel', views.participate_cancel, name='participate_cancel'),
 ]

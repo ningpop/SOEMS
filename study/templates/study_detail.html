@@ -159,17 +159,25 @@ SOEMS - 강의 | {{ study.title }}
                     </div>
                 </div>
 
+                {% if user.is_authenticated and study.host != request.user %}
                 <!-- Contact widget-->
                 <div class="card my-4">
                     <h5 class="card-header">이 강의를 듣고 싶나요?</h5>
                     <div class="card-body">
-                        <a href="#" class="btn btn-block btn-primary text-uppercase">수강신청</a>
+                        {% if did_participate %}
+                        <a href="{% url 'participate_cancel' study.id %}"
+                            class="btn btn-block btn-secondary text-uppercase">수강신청 취소</a>
+                        {% else %}
+                        <a href="{% url 'participate_at_study' study.id %}"
+                            class="btn btn-block btn-primary text-uppercase">수강신청</a>
                         <!-- <div class="input-group">
                             <input class="form-control" type="text" placeholder="Search for...">
                             <span class="input-group-append"><button class="btn btn-secondary" type="button">Go!</button></span>
                         </div> -->
+                        {% endif %}
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
