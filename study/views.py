@@ -60,3 +60,8 @@ def study_update(request, study_id):
         "study" : study
     }
     return render(request, "study_update.html", context)
+
+def study_delete(request, study_id):
+    study = get_object_or_404(Study, pk=study_id)
+    study.delete()
+    return redirect("study_list")

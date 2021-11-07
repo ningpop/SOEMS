@@ -102,9 +102,11 @@ SOEMS - 강의 | {{ study.title }}
             <!-- Side widgets-->
             <div class="col-md-4">
                 <div class="row">
-                    <div class="col-lg-6"></div>
                     <div class="col-lg-6">
-                        <a href="{% url 'study_update' study.id %}" class="btn btn-block btn-primary text-uppercase">강의 글 수정하기</a>
+                        <a href="{% url 'study_update' study.id %}" class="btn btn-block btn-warning text-uppercase">강의 글 수정하기</a>
+                    </div>
+                    <div class="col-lg-6">
+                        <a href="{% url 'study_delete' study.id %}" class="btn btn-block btn-danger text-uppercase">강의 글 삭제하기</a>
                     </div>
                 </div>
                 <!-- Hashtags widget-->
