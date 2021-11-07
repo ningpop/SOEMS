@@ -14,7 +14,13 @@ SOEMS - 강의 글 작성하기
     <li class="nav-item active"><a class="nav-link js-scroll-trigger" href="{% url 'study_list' %}">전체 강의</a></li>
     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'study_create' %}">재능 공유하기</a></li>
     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'home' %}#contact">Contact</a></li>
-    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Log In</a></li>
+    <li class="nav-item">
+        {% if user.is_authenticated %}
+        <a class="nav-link js-scroll-trigger active" href="">{{ user }}님</a>
+        {% else %}
+        <a class="nav-link js-scroll-trigger" href="{% url 'login' %}">Log In</a>
+        {% endif %}
+    </li>
 </ul>
 {% endblock %}
 
@@ -43,7 +49,8 @@ SOEMS - 강의 글 작성하기
         </div>
         <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
             <div class="col-lg-6">
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN" action="{% url 'study_create' %}" method="POST" enctype="multipart/form-data">
+                <form id="contactForm" data-sb-form-api-token="API_TOKEN" action="{% url 'study_create' %}"
+                    method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <!-- Study Title input-->
                     <div class="form-floating mb-3">
@@ -54,39 +61,40 @@ SOEMS - 강의 글 작성하기
                     </div>
                     <!-- Study Category input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="category" name="category" type="text" placeholder="카테고리를 입력해주세요."
-                            data-sb-validations="required" />
+                        <input class="form-control" id="category" name="category" type="text"
+                            placeholder="카테고리를 입력해주세요." data-sb-validations="required" />
                         <label for="category">카테고리 (콤마','로 구분해서 작성해주세요.)</label>
                         <div class="invalid-feedback" data-sb-feedback="category:required">카테고리를 입력해주세요.</div>
                     </div>
                     <!-- Study Period input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="period" name="period" type="text" placeholder="간단한 강의의 진행 기간을 입력해주세요."
-                            data-sb-validations="required" />
+                        <input class="form-control" id="period" name="period" type="text"
+                            placeholder="간단한 강의의 진행 기간을 입력해주세요." data-sb-validations="required" />
                         <label for="period">간단한 강의 기간 (ex. 4주 과정)</label>
                         <div class="invalid-feedback" data-sb-feedback="period:required">간단한 강의의 진행 기간을 입력해주세요.</div>
                     </div>
                     <!-- Study Date input-->
                     <div class="row">
                         <div class="form-floating mb-3 col-md-6">
-                            <input class="form-control" id="start_date" name="start_date" type="date" placeholder="강의의 시작일자를 입력해주세요."
-                                data-sb-validations="required" />
+                            <input class="form-control" id="start_date" name="start_date" type="date"
+                                placeholder="강의의 시작일자를 입력해주세요." data-sb-validations="required" />
                             <label for="start_date">시작 일자</label>
                             <div class="invalid-feedback" data-sb-feedback="start_date:required">강의의 시작일자를 입력해주세요.</div>
                         </div>
                         <div class="form-floating mb-3 col-md-6">
-                            <input class="form-control" id="end_date" name="end_date" type="date" placeholder="강의의 종료일자를 입력해주세요."
-                                data-sb-validations="required" />
+                            <input class="form-control" id="end_date" name="end_date" type="date"
+                                placeholder="강의의 종료일자를 입력해주세요." data-sb-validations="required" />
                             <label for="end_date">종료 일자</label>
                             <div class="invalid-feedback" data-sb-feedback="end_date:required">강의의 종료일자를 입력해주세요.</div>
                         </div>
                     </div>
                     <!-- Study People input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="total_people" name="total_people" type="number" min="1" max="5" placeholder="강의에 참여하는 학생 최대 인원 수를 입력해주세요."
-                            data-sb-validations="required" />
+                        <input class="form-control" id="total_people" name="total_people" type="number" min="1" max="5"
+                            placeholder="강의에 참여하는 학생 최대 인원 수를 입력해주세요." data-sb-validations="required" />
                         <label for="total_people">강의 최대 인원수</label>
-                        <div class="invalid-feedback" data-sb-feedback="total_people:required">강의에 참여하는 학생 최대 인원 수를 입력해주세요.</div>
+                        <div class="invalid-feedback" data-sb-feedback="total_people:required">강의에 참여하는 학생 최대 인원 수를
+                            입력해주세요.</div>
                     </div>
 
                     <!-- Email address input-->
@@ -107,8 +115,9 @@ SOEMS - 강의 글 작성하기
                     </div> -->
                     <!-- Study Content input-->
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" id="content" name="content" type="text" placeholder="강의의 소개 내용을 입력해주세요."
-                            style="height: 10rem" data-sb-validations="required"></textarea>
+                        <textarea class="form-control" id="content" name="content" type="text"
+                            placeholder="강의의 소개 내용을 입력해주세요." style="height: 10rem"
+                            data-sb-validations="required"></textarea>
                         <label for="content">강의 소개 내용</label>
                         <div class="invalid-feedback" data-sb-feedback="content:required">강의의 소개 내용을 입력해주세요.</div>
                     </div>
@@ -133,8 +142,8 @@ SOEMS - 강의 글 작성하기
                         <div class="text-center text-danger mb-3">Error sending message!</div>
                     </div>
                     <!-- Submit Button-->
-                    <div class="d-grid"><button class="btn btn-primary btn-xl" id="submitButton"
-                            type="submit">작성 완료</button></div>
+                    <div class="d-grid"><button class="btn btn-primary btn-xl" id="submitButton" type="submit">작성
+                            완료</button></div>
                 </form>
             </div>
         </div>
