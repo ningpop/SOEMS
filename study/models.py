@@ -30,7 +30,7 @@ class Participation(models.Model):
 
 
 class Review(models.Model):
-    username = models.ForeignKey("user.User", on_delete=models.CASCADE) # 댓글 작성자
+    username = models.ForeignKey(User, on_delete=models.CASCADE) # 댓글 작성자
     study = models.ForeignKey("Study", on_delete=models.CASCADE) # 해당 강의 글
     pub_date = models.DateTimeField(auto_now = True) # 댓글 작성 일자
     content = models.TextField() # 댓글 내용
