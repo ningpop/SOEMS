@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Study
 import datetime
 
@@ -20,6 +21,7 @@ def study_detail(request, study_id):
         }
     return render(request, 'study_detail.html', context)
 
+@login_required
 def study_create(request):
     if request.method == 'POST':
         study = Study()
@@ -42,6 +44,7 @@ def study_create(request):
 
     return render(request, 'study_create.html')
 
+@login_required
 def study_update(request, study_id):
     study = get_object_or_404(Study, pk=study_id)
 
@@ -61,6 +64,7 @@ def study_update(request, study_id):
     }
     return render(request, "study_update.html", context)
 
+@login_required
 def study_delete(request, study_id):
     study = get_object_or_404(Study, pk=study_id)
     study.delete()
