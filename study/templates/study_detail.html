@@ -183,6 +183,18 @@ SOEMS - 강의 | {{ study.title }}
                     </div>
                 </div>
                 {% endif %}
+                <div class="card my-4">
+                    <h5 class="card-header">강의할 준비 되었나요?</h5>
+                    <div class="card-body">
+                        <form id="study_link_form" action="{% url 'start_lecture' study.id %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input class="form-control" type="text" id="study_link" name="study_link" placeholder="Study link...">
+                                <span class="input-group-append"><button class="btn btn-secondary" type="submit">강의 링크 보내기</button></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
