@@ -293,4 +293,7 @@ $RECYCLE.BIN/
 # django secret key
 secret.json
 
+# Twilio API key
+twilio.json
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,python,vscode,django,venv,virtualenv

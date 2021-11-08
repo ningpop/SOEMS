@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load tz %}
 
 {% block title %}
-SOEMS - 비전공자를 위한 웹사이트 만들기 | 강의
+SOEMS - 강의 | {{ study.title }}
 {% endblock %}
 
 {% block style %}
@@ -12,9 +13,16 @@ SOEMS - 비전공자를 위한 웹사이트 만들기 | 강의
 <ul class="navbar-nav ml-auto my-2 my-lg-0">
     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'home' %}#about">About</a></li>
     <li class="nav-item active"><a class="nav-link js-scroll-trigger" href="{% url 'study_list' %}">전체 강의</a></li>
-    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">재능 공유하기</a></li>
+    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'study_create' %}">재능 공유하기</a></li>
     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'home' %}#contact">Contact</a></li>
-    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Log In</a></li>
+    <li class="nav-item">
+        {% if user.is_authenticated %}
+        <a class="nav-link js-scroll-trigger active" href="">{{ user }}님</a>
+        <a class="nav-link js-scroll-trigger" href="{% url 'logout' %}">Log Out</a>
+        {% else %}
+        <a class="nav-link js-scroll-trigger" href="{% url 'login' %}">Log In</a>
+        {% endif %}
+    </li>
 </ul>
 {% endblock %}
 
@@ -36,62 +44,65 @@ SOEMS - 비전공자를 위한 웹사이트 만들기 | 강의
         <div class="row">
             <div class="col-lg-8">
                 <!-- Title-->
-                <h1 class="mt-4">비전공자를 위한 웹사이트 만들기</h1>
+                <h1 class="mt-4">{{ study.title }}</h1>
                 <!-- Author-->
-                <p class="lead">
-                    4주 과정
-                    <!-- <a href="#!">Start Bootstrap</a> -->
-                </p>
+                <p class="lead">{{ study.period }}</p>
                 <hr>
                 <!-- Date and time-->
-                <p>교육 기간: 2021.05.17 ~ 2021.06.13</p>
+                <p>교육 기간: {{ study.start_date }} ~ {{ study.end_date }}</p>
                 <hr>
                 <!-- Preview image-->
                 <img class="img-fluid rounded" src="https://via.placeholder.com/900x300" alt="...">
                 <hr>
                 <h4 class="card-title"><strong>입문자</strong>를 위해 준비한 <strong>웹 개발 강의</strong>입니다.</h4>
                 <!-- Post content-->
-                <p class="lead">왕초보도 할 수 있는 웹 프론트엔드를 익히는 강의입니다. 개발을 어디서부터 시작할지 막막했다면 이 강의를 강력 추천할게요. 간단한 HTML/CSS, Javascript만으로 진행합니다!</p>
-                
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
+                <p class="lead">{{ study.content }}</p>
+
                 <blockquote class="blockquote">
-                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
+                        ante.</p>
                     <footer class="blockquote-footer">
                         Someone famous in
                         <cite title="Source Title">Source Title</cite>
                     </footer>
                 </blockquote>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
                 <hr>
                 <!-- Comments form-->
+                {% if user.is_authenticated %}
                 <div class="card my-4">
                     <h5 class="card-header">수강평 남기기</h5>
                     <div class="card-body">
-                        <form>
-                            <div class="form-group"><textarea class="form-control" rows="3"></textarea></div>
+                        <form method="POST" action="{% url 'review_create' study.id %}">
+                            {% csrf_token %}
+                            <div class="form-group"><textarea class="form-control" name="content" rows="3"></textarea>
+                            </div><br>
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
+                {% endif %}
+                {% for review in study.review_set.all %}
                 <!-- Single comment-->
                 <div class="media mb-4">
                     <img class="d-flex mr-3 rounded-circle" src="https://via.placeholder.com/50x50" alt="...">
                     <div class="media-body">
-                        <h5 class="mt-0">비전공자인데요</h5>
-                        정말 차근차근 알려주셔서 너무 좋았어요! 비전공자로써 개발자의 삶을 조금 더 이해할 수 있었어요.
-                        <div class="media mt-4">
-                            <img class="d-flex mr-3 rounded-circle" src="https://via.placeholder.com/50x50" alt="...">
-                            <div class="media-body">
-                                <h5 class="mt-0">ningpop</h5>
-                                좋은 피드백 감사합니다!<br>
-                                종종 복습하실 때도 모르는 부분이나 헷갈리는 부분있으면 편하게 질문 남겨주세요😁
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h5 class="mt-0">{{ review.username }}</h5>
+                                {{ review.content }}
                             </div>
+                            {% if review.username == request.user %}
+                            <div class="col-md-2">
+                                <a href="{% url 'review_delete' study.id review.id %}"
+                                    class="btn btn-block btn-outline-warning text-uppercase">삭제</a>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
+                {% endfor %}
                 <!-- Comment with nested comments-->
-                <div class="media mb-4">
+                <!-- <div class="media mb-4">
                     <img class="d-flex mr-3 rounded-circle" src="https://via.placeholder.com/50x50" alt="...">
                     <div class="media-body">
                         <h5 class="mt-0">박강민</h5>
@@ -106,51 +117,82 @@ SOEMS - 비전공자를 위한 웹사이트 만들기 | 강의
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
-            
+
             <!-- Side widgets-->
             <div class="col-md-4">
+                {% if study.host == request.user %}
+                <div class="row">
+                    <div class="col-lg-6">
+                        <a href="{% url 'study_update' study.id %}"
+                            class="btn btn-block btn-outline-secondary text-uppercase">강의 글 수정하기</a>
+                    </div>
+                    <div class="col-lg-6">
+                        <a href="{% url 'study_delete' study.id %}"
+                            class="btn btn-block btn-outline-warning text-uppercase">강의 글 삭제하기</a>
+                    </div>
+                </div>
+                {% endif %}
                 <!-- Hashtags widget-->
                 <div class="card my-4">
                     <h5 class="card-header">Hashtags</h5>
                     <div class="card-body">
                         <div class="row">
+                            {% for tag in categories %}
                             <div class="col-lg-6">
                                 <ul class="list-unstyled mb-0">
-                                    <li><a href="#!">HTML/CSS</a></li>
+                                    <li><a href="#!">{{ tag }}</a></li>
                                 </ul>
                             </div>
-                            <div class="col-lg-6">
-                                <ul class="list-unstyled mb-0">
-                                    <li><a href="#!">JavaScript</a></li>
-                                </ul>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
 
                 <!-- Info widget-->
                 <div class="card my-4">
-                    <h5 class="card-header">Study Info</h5>
+                    <h5 class="card-header">Host Info</h5>
                     <div class="card-body">
-                        · 교육자: ningpop<br>
-                        · 교육기간: 주 3회 1시간 강의 / 총 4주<br>
-                        · 대상자: 비전공자<br>
-                        · 수업 진행 플랫폼: 줌(ZOOM)
+                        · 교육자: {{ study.host }}<br>
+                        · Email: <a href="mailto:{{ study.host.email }}">{{ study.host.email }}</a>
                     </div>
                 </div>
 
+                {% if user.is_authenticated and study.host != request.user %}
                 <!-- Contact widget-->
                 <div class="card my-4">
                     <h5 class="card-header">이 강의를 듣고 싶나요?</h5>
                     <div class="card-body">
-                        <a href="#" class="btn btn-block btn-primary text-uppercase">수강신청</a>
+                        {% if did_participate %}
+                        <a href="{% url 'participate_cancel' study.id %}"
+                            class="btn btn-block btn-secondary text-uppercase">수강신청 취소</a>
+                        {% else %}
+                        {% if study.start_date >= now %}
+                        <a href="{% url 'participate_at_study' study.id %}"
+                            class="btn btn-block btn-primary text-uppercase">수강신청</a>
                         <!-- <div class="input-group">
                             <input class="form-control" type="text" placeholder="Search for...">
                             <span class="input-group-append"><button class="btn btn-secondary" type="button">Go!</button></span>
                         </div> -->
+                        {% else %}
+                        <a href="" class="btn btn-block btn-primary text-uppercase disabled">강의가 이미 시작되었습니다.</a>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                <div class="card my-4">
+                    <h5 class="card-header">강의할 준비 되었나요?</h5>
+                    <div class="card-body">
+                        <form id="study_link_form" action="{% url 'start_lecture' study.id %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input class="form-control" type="text" id="study_link" name="study_link" placeholder="Study link...">
+                                <span class="input-group-append"><button class="btn btn-secondary" type="submit">강의 링크 보내기</button></span>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

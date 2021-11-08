@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+SOEMS - 강의 글 작성하기
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block menu %}
+<ul class="navbar-nav ml-auto my-2 my-lg-0">
+    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'home' %}#about">About</a></li>
+    <li class="nav-item active"><a class="nav-link js-scroll-trigger" href="{% url 'study_list' %}">전체 강의</a></li>
+    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'study_create' %}">재능 공유하기</a></li>
+    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'home' %}#contact">Contact</a></li>
+    <li class="nav-item">
+        {% if user.is_authenticated %}
+        <a class="nav-link js-scroll-trigger active" href="">{{ user }}님</a>
+        <a class="nav-link js-scroll-trigger" href="{% url 'logout' %}">Log Out</a>
+        {% else %}
+        <a class="nav-link js-scroll-trigger" href="{% url 'login' %}">Log In</a>
+        {% endif %}
+    </li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<header class="masthead-otherpage">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10 align-self-end">
+                <h2 class="text-uppercase text-white font-weight-bold">Ready to start substainable your life with us?
+                </h2>
+                <hr class="divider my-4" />
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Contact-->
+<section class="page-section" id="contact">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6 text-center">
+                <h2 class="mt-0">새로운 강의를 개설해보세요!</h2>
+                <hr class="divider" />
+                <p class="text-muted mb-5">당신의 재능을 배우고 싶은 사람들이 많을거예요.<br>강의를 개설해서 재능을 공유해주세요.</p>
+            </div>
+        </div>
+        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+            <div class="col-lg-6">
+                <form id="contactForm" data-sb-form-api-token="API_TOKEN" action="{% url 'study_create' %}"
+                    method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <!-- Study Title input-->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="title" name="title" type="text" placeholder="강의 제목을 입력해주세요."
+                            data-sb-validations="required" />
+                        <label for="title">강의 제목</label>
+                        <div class="invalid-feedback" data-sb-feedback="title:required">강의 제목을 입력해주세요.</div>
+                    </div>
+                    <!-- Study Category input-->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="category" name="category" type="text"
+                            placeholder="카테고리를 입력해주세요." data-sb-validations="required" />
+                        <label for="category">카테고리 (콤마','로 구분해서 작성해주세요.)</label>
+                        <div class="invalid-feedback" data-sb-feedback="category:required">카테고리를 입력해주세요.</div>
+                    </div>
+                    <!-- Study Period input-->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="period" name="period" type="text"
+                            placeholder="간단한 강의의 진행 기간을 입력해주세요." data-sb-validations="required" />
+                        <label for="period">간단한 강의 기간 (ex. 4주 과정)</label>
+                        <div class="invalid-feedback" data-sb-feedback="period:required">간단한 강의의 진행 기간을 입력해주세요.</div>
+                    </div>
+                    <!-- Study Date input-->
+                    <div class="row">
+                        <div class="form-floating mb-3 col-md-6">
+                            <input class="form-control" id="start_date" name="start_date" type="date"
+                                placeholder="강의의 시작일자를 입력해주세요." data-sb-validations="required" />
+                            <label for="start_date">시작 일자</label>
+                            <div class="invalid-feedback" data-sb-feedback="start_date:required">강의의 시작일자를 입력해주세요.</div>
+                        </div>
+                        <div class="form-floating mb-3 col-md-6">
+                            <input class="form-control" id="end_date" name="end_date" type="date"
+                                placeholder="강의의 종료일자를 입력해주세요." data-sb-validations="required" />
+                            <label for="end_date">종료 일자</label>
+                            <div class="invalid-feedback" data-sb-feedback="end_date:required">강의의 종료일자를 입력해주세요.</div>
+                        </div>
+                    </div>
+                    <!-- Study People input-->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="total_people" name="total_people" type="number" min="1" max="5"
+                            placeholder="강의에 참여하는 학생 최대 인원 수를 입력해주세요." data-sb-validations="required" />
+                        <label for="total_people">강의 최대 인원수</label>
+                        <div class="invalid-feedback" data-sb-feedback="total_people:required">강의에 참여하는 학생 최대 인원 수를
+                            입력해주세요.</div>
+                    </div>
+
+                    <!-- Email address input-->
+                    <!-- <div class="form-floating mb-3">
+                        <input class="form-control" id="email" type="email" placeholder="name@example.com"
+                            data-sb-validations="required" />
+                        <label for="email">Email address</label>
+                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                    </div> -->
+                    <!-- Phone number input-->
+                    <!-- <div class="form-floating mb-3">
+                        <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890"
+                            data-sb-validations="required" />
+                        <label for="phone">Phone number</label>
+                        <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.
+                        </div>
+                    </div> -->
+                    <!-- Study Content input-->
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="content" name="content" type="text"
+                            placeholder="강의의 소개 내용을 입력해주세요." style="height: 10rem"
+                            data-sb-validations="required"></textarea>
+                        <label for="content">강의 소개 내용</label>
+                        <div class="invalid-feedback" data-sb-feedback="content:required">강의의 소개 내용을 입력해주세요.</div>
+                    </div>
+                    <!-- Submit success message-->
+                    <!---->
+                    <!-- This is what your users will see when the form-->
+                    <!-- has successfully submitted-->
+                    <!-- <div class="d-none" id="submitSuccessMessage">
+                        <div class="text-center mb-3">
+                            <div class="fw-bolder">Form submission successful!</div>
+                            To activate this form, sign up at
+                            <br />
+                            <a
+                                href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                        </div>
+                    </div> -->
+                    <!-- Submit error message-->
+                    <!---->
+                    <!-- This is what your users will see when there is-->
+                    <!-- an error submitting the form-->
+                    <div class="d-none" id="submitErrorMessage">
+                        <div class="text-center text-danger mb-3">Error sending message!</div>
+                    </div>
+                    <!-- Submit Button-->
+                    <div class="d-grid"><button class="btn btn-primary btn-xl" id="submitButton" type="submit">작성
+                            완료</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
