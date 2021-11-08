@@ -52,20 +52,20 @@ SOEMS - 강의 | {{ study.title }}
                 <p>교육 기간: {{ study.start_date }} ~ {{ study.end_date }}</p>
                 <hr>
                 <!-- Preview image-->
-                <img class="img-fluid rounded" src="https://via.placeholder.com/900x300" alt="...">
-                <hr>
-                <h4 class="card-title"><strong>입문자</strong>를 위해 준비한 <strong>웹 개발 강의</strong>입니다.</h4>
+                <!-- <img class="img-fluid rounded" src="https://via.placeholder.com/900x300" alt="...">
+                <hr> -->
+                <!-- <h4 class="card-title"><strong>입문자</strong>를 위해 준비한 <strong>웹 개발 강의</strong>입니다.</h4> -->
                 <!-- Post content-->
                 <p class="lead">{{ study.content }}</p>
 
-                <blockquote class="blockquote">
+                <!-- <blockquote class="blockquote">
                     <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
                         ante.</p>
                     <footer class="blockquote-footer">
                         Someone famous in
                         <cite title="Source Title">Source Title</cite>
                     </footer>
-                </blockquote>
+                </blockquote> -->
                 <hr>
                 <!-- Comments form-->
                 {% if user.is_authenticated %}
