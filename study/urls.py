@@ -16,4 +16,7 @@ urlpatterns = [
     # Participation
     path('detail/<int:study_id>/participate_at_study', views.participate_at_study, name='participate_at_study'),
     path('detail/<int:study_id>/participate_cancel', views.participate_cancel, name='participate_cancel'),
+
+    # Send Study link SMS
+    path('detail/<int:study_id>/start_lecture', views.start_lecture, name='start_lecture'),
 ]

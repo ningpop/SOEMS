@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from .models import Study, Review, Participation
+from .link_sending_module import sms_reminder
 import datetime
 
 # Create your views here.
@@ -122,4 +123,12 @@ def participate_cancel(request, study_id):
     study = get_object_or_404(Study, pk=study_id)
     participation = get_object_or_404(Participation, study=study, applicant=request.user)
     participation.delete()
+    return redirect('study_detail', study_id)
+
+
+
+''' Other Module '''
+def start_lecture(request, study_id):
+    study_link = request.POST['study_link']
+    sms_reminder(study_id, study_link)
     return redirect('study_detail', study_id)
