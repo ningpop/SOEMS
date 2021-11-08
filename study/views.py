@@ -22,10 +22,12 @@ def study_detail(request, study_id):
     participation = Participation.objects.filter(study=study, applicant=request.user)
     if participation.count() != 0:
         did_participate = True
+    now = datetime.date.today()
     context = {
         'study' : study,
         'categories' : category,
-        'did_participate' : did_participate
+        'did_participate' : did_participate,
+        "now" : now
         }
     return render(request, 'study_detail.html', context)
 
@@ -104,8 +106,11 @@ def review_delete(request, study_id, review_id):
 
 
 ''' 수강신청 '''
+
 def participate_at_study(request, study_id):
     study = get_object_or_404(Study, pk=study_id)
+    if study.start_date < datetime.date.today():
+        return redirect('study_detail', study_id)
     if study.host != request.user:
         participation = Participation()
         participation.study = study
