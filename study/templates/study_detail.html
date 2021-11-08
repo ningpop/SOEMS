@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load tz %}
 
 {% block title %}
 SOEMS - 강의 | {{ study.title }}
@@ -159,17 +160,29 @@ SOEMS - 강의 | {{ study.title }}
                     </div>
                 </div>
 
+                {% if user.is_authenticated and study.host != request.user %}
                 <!-- Contact widget-->
                 <div class="card my-4">
                     <h5 class="card-header">이 강의를 듣고 싶나요?</h5>
                     <div class="card-body">
-                        <a href="#" class="btn btn-block btn-primary text-uppercase">수강신청</a>
+                        {% if did_participate %}
+                        <a href="{% url 'participate_cancel' study.id %}"
+                            class="btn btn-block btn-secondary text-uppercase">수강신청 취소</a>
+                        {% else %}
+                        {% if study.start_date >= now %}
+                        <a href="{% url 'participate_at_study' study.id %}"
+                            class="btn btn-block btn-primary text-uppercase">수강신청</a>
                         <!-- <div class="input-group">
                             <input class="form-control" type="text" placeholder="Search for...">
                             <span class="input-group-append"><button class="btn btn-secondary" type="button">Go!</button></span>
                         </div> -->
+                        {% else %}
+                        <a href="" class="btn btn-block btn-primary text-uppercase disabled">강의가 이미 시작되었습니다.</a>
+                        {% endif %}
+                        {% endif %}
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
