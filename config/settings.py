@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'user.apps.UserConfig',
     'study.apps.StudyConfig',
+    'crawling.apps.CrawlingConfig',
 ]
 
 MIDDLEWARE = [

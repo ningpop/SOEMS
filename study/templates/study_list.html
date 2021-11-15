@@ -40,6 +40,34 @@ SOEMS - 전체 강의 목록
 
 <section class="py-5 bg-light">
     <div class="container">
+        <div class="card my-4">
+            <h5 class="card-header">SOEMS에서 다른 사이트의 강의를 찾아보세요!</h5>
+            <div class="card-body">
+                <form id="study_link_form" action="{% url 'crawling' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input class="form-control" type="text" id="keyword" name="keyword" placeholder="키워드 입력">
+                        <span class="input-group-append"><button class="btn btn-secondary"
+                                type="submit">검색</button></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            {% for lecture in lectures %}
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{{ lecture.link }}" target="_blank">{{ lecture.title }}</a>
+                        </h5>
+                        <p class="card-text">강사 : {{ lecture.author }}</p>
+                        <p class="card-text">{{ lecture.price }} - {{ lecture.location }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <hr>
         <h2 class="mb-4">전체 강의</h2>
         <div class="row">
             {% for study in studies %}
