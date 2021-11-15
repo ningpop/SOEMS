@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+
 from .models import Study, Review, Participation
+from crawling.models import Taling
 from .link_sending_module import sms_reminder
+
 import datetime
 
 # Create your views here.
@@ -11,7 +14,11 @@ import datetime
 
 def study_list(request):
     study_query_set = Study.objects.order_by('pub_date')
-    context = { 'studies' : study_query_set }
+    lecture_query_set = Taling.objects.all()
+    context = {
+        'studies' : study_query_set,
+        'lectures' : lecture_query_set
+    }
     return render(request, 'study_list.html', context)
 
 def study_detail(request, study_id):
