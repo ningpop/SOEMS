@@ -5,4 +5,3 @@
 ### 💻 Technology Stack
 - Python 3.7.3
 - Django 3.1.6
-- Django REST Framework 3.12.2
